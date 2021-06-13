@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.strings.attached.musiclibrary.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
+    private val searchViewModel: SearchViewModel by viewModels()
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
@@ -29,7 +31,7 @@ class SearchFragment : Fragment() {
         binding.artistsSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
-                    // TODO: 2021/06/13 search for the artist
+                    searchViewModel.setSearchQuery(query)
                 }
                 return true
             }
