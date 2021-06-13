@@ -1,7 +1,8 @@
-package com.strings.attached.musiclibrary
+package com.strings.attached.musiclibrary.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.strings.attached.musiclibrary.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
