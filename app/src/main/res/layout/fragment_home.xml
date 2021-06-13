@@ -14,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu"
-        app:title="@string/app_name" />
-
+        app:title="@string/title_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
