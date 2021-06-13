@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MusicLibrary</string>
+    <string name="action_search">Search</string>
+    <string name="title_home">Music Library</string>
 </resources>
