@@ -6,6 +6,10 @@ buildscript {
         nav_version = "2.3.5"
         hilt_version = "2.37"
         lifecycle_version = "2.3.1"
+        okHttp = "4.9.1"
+        kotlinSerialization = "1.2.1"
+        kotlinSerializationConverter = "0.8.0"
+        retrofit = "2.9.0"
     }
     repositories {
         google()
