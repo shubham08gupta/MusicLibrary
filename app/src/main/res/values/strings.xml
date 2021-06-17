@@ -3,4 +3,6 @@
     <string name="action_search">Search</string>
     <string name="title_home">Music Library</string>
     <string name="message_artist_search">Search for an artist</string>
+    <string name="retry">Retry</string>
+    <string name="no_results">No results 😓</string>
 </resources>
