@@ -11,9 +11,9 @@ import com.strings.attached.musiclibrary.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class ArtistSearchFragment : Fragment() {
 
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val artistSearchViewModel: ArtistSearchViewModel by viewModels()
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
@@ -31,7 +31,7 @@ class SearchFragment : Fragment() {
         binding.artistsSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
-                    searchViewModel.setSearchQuery(query)
+                    artistSearchViewModel.setSearchQuery(query)
                 }
                 return true
             }

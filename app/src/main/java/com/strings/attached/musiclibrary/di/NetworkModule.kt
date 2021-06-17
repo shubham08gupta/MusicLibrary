@@ -2,7 +2,7 @@ package com.strings.attached.musiclibrary.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.strings.attached.musiclibrary.BuildConfig
-import com.strings.attached.musiclibrary.api.ApiService
+import com.strings.attached.musiclibrary.api.artist.ArtistApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +55,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService =
-        retrofit.create(ApiService::class.java)
+    fun provideArtistApiService(retrofit: Retrofit): ArtistApiService =
+        retrofit.create(ArtistApiService::class.java)
 }

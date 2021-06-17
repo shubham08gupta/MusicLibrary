@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class ArtistSearchViewModel @Inject constructor(
+    private val artistsRepository: ArtistsRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
