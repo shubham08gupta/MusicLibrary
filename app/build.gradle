@@ -76,4 +76,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerialization"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerializationConverter"
 
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    implementation "io.coil-kt:coil:$coil_version"
+
 }

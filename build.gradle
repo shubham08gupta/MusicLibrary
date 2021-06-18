@@ -10,6 +10,8 @@ buildscript {
         kotlinSerialization = "1.2.1"
         kotlinSerializationConverter = "0.8.0"
         retrofit = "2.9.0"
+        paging_version = "3.0.0"
+        coil_version = "1.2.2"
     }
     repositories {
         google()
