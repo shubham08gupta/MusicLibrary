@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_topAlbumsFragment_to_albumDetailFragment"
             app:destination="@id/albumDetailFragment" />
+        <argument
+            android:name="artistName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/albumDetailFragment"

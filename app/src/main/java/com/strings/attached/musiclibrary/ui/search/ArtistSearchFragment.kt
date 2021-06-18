@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.strings.attached.musiclibrary.databinding.FragmentSearchBinding
 import com.strings.attached.musiclibrary.ui.util.LoadingStateAdapter
@@ -27,6 +28,9 @@ class ArtistSearchFragment : Fragment() {
     private var searchResultsJob: Job? = null
 
     private val adapter = ArtistSearchAdapter {
+        findNavController().navigate(
+            ArtistSearchFragmentDirections.actionSearchFragmentToTopAlbumsFragment(it.name)
+        )
     }
 
     override fun onCreateView(
