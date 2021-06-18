@@ -2,6 +2,7 @@ package com.strings.attached.musiclibrary.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.strings.attached.musiclibrary.BuildConfig
+import com.strings.attached.musiclibrary.api.QueryParameterInterceptor
 import com.strings.attached.musiclibrary.api.artist.ArtistApiService
 import dagger.Module
 import dagger.Provides
@@ -22,9 +23,11 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
+        queryParameterInterceptor: QueryParameterInterceptor,
     ): OkHttpClient {
         return OkHttpClient.Builder().apply {
             addInterceptor(httpLoggingInterceptor)
+            addInterceptor(queryParameterInterceptor)
         }.build()
     }
 
@@ -37,6 +40,10 @@ object NetworkModule {
             } else HttpLoggingInterceptor.Level.NONE
         }
     }
+
+    @Singleton
+    @Provides
+    fun provideQueryParameterInterceptor(): QueryParameterInterceptor = QueryParameterInterceptor()
 
     @Singleton
     @Provides
