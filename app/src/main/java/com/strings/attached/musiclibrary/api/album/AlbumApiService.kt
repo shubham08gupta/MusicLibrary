@@ -11,4 +11,10 @@ interface AlbumApiService {
         @Query("page") page: Int,
         @Query("limit") limit: Int,
     ): TopAlbumsResponse
+
+    @GET("?method=album.getinfo")
+    suspend fun getAlbumDetails(
+        @Query("artist") artistName: String,
+        @Query("album") albumName: String
+    ): AlbumDetailResponse
 }
