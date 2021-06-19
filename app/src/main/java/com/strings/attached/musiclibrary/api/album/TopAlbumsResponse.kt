@@ -6,7 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TopAlbumsResponse(
-    @SerialName("topalbums") val topAlbums: List<Album>? = null,
+    @SerialName("topalbums") val topAlbums: TopAlbums? = null,
     val error: String? = null,
     val message: String? = null,
+)
+
+@Serializable
+data class TopAlbums(
+    @SerialName("album") val albums: List<Album> = emptyList()
 )
