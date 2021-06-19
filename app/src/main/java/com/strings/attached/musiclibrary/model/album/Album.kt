@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class Album(
     val name: String,
     @SerialName("playcount") val playCount: Int,
-    val mbid: String,
+    val mbid: String? = null,
     val url: String,
     val artist: Artist,
     val image: List<Image>

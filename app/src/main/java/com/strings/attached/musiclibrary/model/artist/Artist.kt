@@ -5,9 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Artist(
     val name: String,
-    val listeners: String,
-    val mbid: String,
+    val mbid: String? = null,
     val url: String,
-    val streamable: String,
-    val image: List<Image>
+    val image: List<Image> = emptyList()
 )
