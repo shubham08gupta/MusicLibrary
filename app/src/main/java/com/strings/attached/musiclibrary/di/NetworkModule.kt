@@ -3,6 +3,7 @@ package com.strings.attached.musiclibrary.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.strings.attached.musiclibrary.BuildConfig
 import com.strings.attached.musiclibrary.api.QueryParameterInterceptor
+import com.strings.attached.musiclibrary.api.album.AlbumApiService
 import com.strings.attached.musiclibrary.api.artist.ArtistApiService
 import dagger.Module
 import dagger.Provides
@@ -64,4 +65,9 @@ object NetworkModule {
     @Provides
     fun provideArtistApiService(retrofit: Retrofit): ArtistApiService =
         retrofit.create(ArtistApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideAlbumApiService(retrofit: Retrofit): AlbumApiService =
+        retrofit.create(AlbumApiService::class.java)
 }
