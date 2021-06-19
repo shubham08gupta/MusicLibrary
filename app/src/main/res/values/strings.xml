@@ -5,4 +5,8 @@
     <string name="message_artist_search">Search for an artist</string>
     <string name="retry">Retry</string>
     <string name="no_results">No results 😓</string>
+    <plurals name="play_count">
+        <item quantity="one">%d play</item>
+        <item quantity="other">%d plays</item>
+    </plurals>
 </resources>
