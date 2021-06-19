@@ -1,5 +1,7 @@
 package com.strings.attached.musiclibrary.di
 
+import com.strings.attached.musiclibrary.data.album.AlbumRepository
+import com.strings.attached.musiclibrary.data.album.AlbumRepositoryImpl
 import com.strings.attached.musiclibrary.data.artist.ArtistSearchRepository
 import com.strings.attached.musiclibrary.data.artist.ArtistSearchRepositoryImpl
 import dagger.Binds
@@ -19,4 +21,9 @@ abstract class RepositoryModule {
     abstract fun bindArtistRepository(
         artistsRepositoryImpl: ArtistSearchRepositoryImpl
     ): ArtistSearchRepository
+
+    @Binds
+    abstract fun bindAlbumRepository(
+        albumRepositoryImpl: AlbumRepositoryImpl
+    ): AlbumRepository
 }
