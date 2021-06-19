@@ -9,4 +9,12 @@
         <item quantity="one">%d play</item>
         <item quantity="other">%d plays</item>
     </plurals>
+    <plurals name="listeners_count">
+        <item quantity="one">%s listener</item>
+        <item quantity="other">%s listeners</item>
+    </plurals>
+    <plurals name="tracks_count" >
+        <item quantity="one">%d track</item>
+        <item quantity="other">%d tracks</item>
+    </plurals>
 </resources>
