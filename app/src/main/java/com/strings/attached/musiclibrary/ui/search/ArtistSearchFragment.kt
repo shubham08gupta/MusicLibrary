@@ -96,6 +96,7 @@ class ArtistSearchFragment : Fragment() {
                     Toast.makeText(context, "${it.error}", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.retryButton.setOnClickListener { adapter.retry() }
     }
 
     private fun showEmptyList(show: Boolean) {
