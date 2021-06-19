@@ -42,5 +42,12 @@
         android:id="@+id/albumDetailFragment"
         android:name="com.strings.attached.musiclibrary.ui.album.detail.AlbumDetailFragment"
         android:label="fragment_album_detail"
-        tools:layout="@layout/fragment_album_detail" />
+        tools:layout="@layout/fragment_album_detail">
+        <argument
+            android:name="artistName"
+            app:argType="string" />
+        <argument
+            android:name="albumName"
+            app:argType="string" />
+    </fragment>
 </navigation>

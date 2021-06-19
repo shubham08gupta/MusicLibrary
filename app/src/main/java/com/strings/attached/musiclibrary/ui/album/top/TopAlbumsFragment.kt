@@ -36,7 +36,12 @@ class TopAlbumsFragment : Fragment() {
     private var topAlbumSearchJob: Job? = null
 
     private val adapter = TopAlbumsAdapter {
-
+        findNavController().navigate(
+            TopAlbumsFragmentDirections.actionTopAlbumsFragmentToAlbumDetailFragment(
+                artistName = it.artist.name,
+                albumName = it.name
+            )
+        )
     }
 
     override fun onCreateView(
