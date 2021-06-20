@@ -8,6 +8,7 @@ import com.strings.attached.musiclibrary.data.album.TopAlbumsPagingSource.Compan
 import com.strings.attached.musiclibrary.db.AlbumDao
 import com.strings.attached.musiclibrary.db.TrackDao
 import com.strings.attached.musiclibrary.model.album.Album
+import com.strings.attached.musiclibrary.model.album.AlbumDetail
 import com.strings.attached.musiclibrary.model.album.AlbumWithTracks
 import kotlinx.coroutines.flow.Flow
 import java.io.IOException
@@ -40,6 +41,11 @@ interface AlbumRepository {
      * A method to check if an album is available in the local DB or not
      */
     suspend fun isAlbumAvailableLocally(albumName: String, artistName: String): Boolean
+
+    /***
+     * returns a [Flow] of all the locally saved albums
+     */
+    fun getLocallySavedAlbums(): Flow<List<AlbumDetail>>
 }
 
 @Singleton
@@ -122,5 +128,9 @@ class AlbumRepositoryImpl @Inject constructor(
 
     override suspend fun isAlbumAvailableLocally(albumName: String, artistName: String): Boolean {
         return albumDao.getAlbumWithTracksDetail(albumName, artistName) != null
+    }
+
+    override fun getLocallySavedAlbums(): Flow<List<AlbumDetail>> {
+        return albumDao.getAllAlbums()
     }
 }
