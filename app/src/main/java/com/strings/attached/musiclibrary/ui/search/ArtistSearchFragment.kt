@@ -64,6 +64,9 @@ class ArtistSearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean = false
         })
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun initAdapter() {

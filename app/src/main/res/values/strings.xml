@@ -7,6 +7,7 @@
     <string name="no_results">No results 😓</string>
     <string name="message_no_album_available_locally">Your saved albums will be visible here</string>
     <string name="title_local_albums">Your albums</string>
+    <string name="title_artist_search">Artist search</string>
     <plurals name="play_count">
         <item quantity="one">%d play</item>
         <item quantity="other">%d plays</item>
