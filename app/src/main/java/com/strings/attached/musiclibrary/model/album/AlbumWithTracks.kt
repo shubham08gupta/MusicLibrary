@@ -10,7 +10,7 @@ data class AlbumWithTracks(
     @Embedded val album: AlbumDetail,
     @Relation(
         parentColumn = "albumId",
-        entityColumn = "trackId"
+        entityColumn = "trackAlbumId"
     )
     val tracks: List<Track>
 )
