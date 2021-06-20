@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.strings.attached.musiclibrary.api.album.AlbumApiService
 import com.strings.attached.musiclibrary.data.album.TopAlbumsPagingSource.Companion.NETWORK_PAGE_SIZE
 import com.strings.attached.musiclibrary.db.AlbumDao
+import com.strings.attached.musiclibrary.db.TrackDao
 import com.strings.attached.musiclibrary.model.album.Album
 import com.strings.attached.musiclibrary.model.album.AlbumWithTracks
 import kotlinx.coroutines.flow.Flow
@@ -25,12 +26,27 @@ interface AlbumRepository {
      */
     suspend fun getAlbumDetail(artistName: String, albumName: String): Result<AlbumWithTracks>
 
+    /***
+     * saves an album with all its tracks in the local DB
+     */
+    suspend fun saveAlbumWithTracksLocally(albumWithTracks: AlbumWithTracks)
+
+    /***
+     * deletes an album with all its tracks in the local DB
+     */
+    suspend fun deleteLocalAlbum(albumWithTracks: AlbumWithTracks)
+
+    /***
+     * A method to check if an album is available in the local DB or not
+     */
+    suspend fun isAlbumAvailableLocally(albumName: String, artistName: String): Boolean
 }
 
 @Singleton
 class AlbumRepositoryImpl @Inject constructor(
     private val albumService: AlbumApiService,
     private val albumDao: AlbumDao,
+    private val trackDao: TrackDao,
 ) : AlbumRepository {
     override fun getTopAlbumsByArtistName(artistName: String): Flow<PagingData<Album>> {
         return Pager(
@@ -78,4 +94,33 @@ class AlbumRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun saveAlbumWithTracksLocally(albumWithTracks: AlbumWithTracks) {
+        // insert the album to create a primary key
+        albumDao.insert(albumWithTracks.album)
+        // fetch the album to get the primary key
+        albumDao.getAlbumDetail(
+            albumName = albumWithTracks.album.albumName,
+            artistName = albumWithTracks.album.artistName
+        )?.let { album ->
+            albumWithTracks.tracks.forEach { track ->
+                // create a foreign key and then save
+                trackDao.insert(track.copy(trackAlbumId = album.albumId))
+            }
+        }
+    }
+
+    override suspend fun deleteLocalAlbum(albumWithTracks: AlbumWithTracks) {
+        // find the album and delete it
+        albumDao.getAlbumDetail(
+            albumName = albumWithTracks.album.albumName,
+            artistName = albumWithTracks.album.artistName
+        )?.let { album ->
+            // deleting the album will delete all its tracks also because of the foreign key constraint
+            albumDao.delete(album)
+        }
+    }
+
+    override suspend fun isAlbumAvailableLocally(albumName: String, artistName: String): Boolean {
+        return albumDao.getAlbumWithTracksDetail(albumName, artistName) != null
+    }
 }

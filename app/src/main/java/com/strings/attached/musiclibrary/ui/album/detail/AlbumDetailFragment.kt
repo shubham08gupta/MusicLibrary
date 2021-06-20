@@ -20,6 +20,7 @@ import com.strings.attached.musiclibrary.model.album.AlbumWithTracks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,6 +42,7 @@ class AlbumDetailFragment : Fragment() {
     }
 
     private var uiStateJob: Job? = null
+    private var albumAvailabilityJob: Job? = null
 
     private val trackAdapter = AlbumTrackAdapter {
         activity?.apply {
@@ -80,6 +82,18 @@ class AlbumDetailFragment : Fragment() {
                 }
             }
         }
+        albumAvailabilityJob = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            albumDetailViewModel.albumAvailabilityState.collectLatest {
+                when (it) {
+                    AlbumAvailabilityState.AVAILABLE_LOCALLY -> {
+                        binding.fab.setImageResource(R.drawable.ic_baseline_delete_24)
+                    }
+                    AlbumAvailabilityState.NOT_AVAILABLE_LOCALLY -> {
+                        binding.fab.setImageResource(R.drawable.ic_baseline_cloud_download_24)
+                    }
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,6 +102,9 @@ class AlbumDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
         binding.content.tracksRv.adapter = trackAdapter
+        binding.fab.setOnClickListener {
+            albumDetailViewModel.saveOrDeleteAlbum()
+        }
     }
 
     private fun showAlbumDetail(albumWithTracks: AlbumWithTracks) {
@@ -119,6 +136,7 @@ class AlbumDetailFragment : Fragment() {
 
     override fun onStop() {
         uiStateJob?.cancel()
+        albumAvailabilityJob?.cancel()
         super.onStop()
     }
 
