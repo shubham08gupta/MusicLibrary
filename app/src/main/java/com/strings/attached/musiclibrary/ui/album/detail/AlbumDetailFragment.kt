@@ -16,7 +16,7 @@ import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.strings.attached.musiclibrary.R
 import com.strings.attached.musiclibrary.databinding.FragmentAlbumDetailBinding
-import com.strings.attached.musiclibrary.model.album.AlbumDetail
+import com.strings.attached.musiclibrary.model.album.AlbumWithTracks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -75,7 +75,7 @@ class AlbumDetailFragment : Fragment() {
                     }
                     is AlbumDetailUiState.Success -> {
                         binding.progressBar.isVisible = false
-                        showAlbumDetail(state.album)
+                        showAlbumDetail(state.albumWithTracks)
                     }
                 }
             }
@@ -90,30 +90,30 @@ class AlbumDetailFragment : Fragment() {
         binding.content.tracksRv.adapter = trackAdapter
     }
 
-    private fun showAlbumDetail(album: AlbumDetail) {
+    private fun showAlbumDetail(albumWithTracks: AlbumWithTracks) {
         binding.apply {
-            ivAlbumImage.load(album.image.find { it.size == "large" }?.text) {
+            ivAlbumImage.load(albumWithTracks.album.albumImageUrl) {
                 crossfade(true)
                 error(R.drawable.drawable_placeholder)
                 placeholder(R.drawable.drawable_placeholder)
             }
-            toolbar.title = album.artistName
-            content.tvAlbumName.text = album.name
+            toolbar.title = albumWithTracks.album.artistName
+            content.tvAlbumName.text = albumWithTracks.album.albumName
             content.tvNumListeners.apply {
                 text = resources.getQuantityString(
                     R.plurals.listeners_count,
-                    album.listeners.toIntOrNull() ?: 0,
-                    album.listeners
+                    albumWithTracks.album.listeners.toIntOrNull() ?: 0,
+                    albumWithTracks.album.listeners
                 )
             }
             content.tvNumTracks.apply {
                 text = resources.getQuantityString(
                     R.plurals.tracks_count,
-                    album.tracks?.tracks?.size ?: 0,
-                    album.tracks?.tracks?.size ?: 0
+                    albumWithTracks.tracks.size,
+                    albumWithTracks.tracks.size
                 )
             }
-            trackAdapter.submitList(album.tracks?.tracks)
+            trackAdapter.submitList(albumWithTracks.tracks)
         }
     }
 

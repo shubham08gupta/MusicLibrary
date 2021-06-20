@@ -5,8 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.strings.attached.musiclibrary.api.album.AlbumApiService
 import com.strings.attached.musiclibrary.data.album.TopAlbumsPagingSource.Companion.NETWORK_PAGE_SIZE
+import com.strings.attached.musiclibrary.db.AlbumDao
 import com.strings.attached.musiclibrary.model.album.Album
-import com.strings.attached.musiclibrary.model.album.AlbumDetail
+import com.strings.attached.musiclibrary.model.album.AlbumWithTracks
 import kotlinx.coroutines.flow.Flow
 import java.io.IOException
 import javax.inject.Inject
@@ -19,12 +20,17 @@ interface AlbumRepository {
      */
     fun getTopAlbumsByArtistName(artistName: String): Flow<PagingData<Album>>
 
-    suspend fun getAlbumDetail(artistName: String, albumName: String): Result<AlbumDetail>
+    /***
+     * returns an Album with all its tracks either from the DB or from the network.
+     */
+    suspend fun getAlbumDetail(artistName: String, albumName: String): Result<AlbumWithTracks>
+
 }
 
 @Singleton
 class AlbumRepositoryImpl @Inject constructor(
     private val albumService: AlbumApiService,
+    private val albumDao: AlbumDao,
 ) : AlbumRepository {
     override fun getTopAlbumsByArtistName(artistName: String): Flow<PagingData<Album>> {
         return Pager(
@@ -37,22 +43,38 @@ class AlbumRepositoryImpl @Inject constructor(
     override suspend fun getAlbumDetail(
         artistName: String,
         albumName: String
-    ): Result<AlbumDetail> {
+    ): Result<AlbumWithTracks> {
+        // get data from the DB
+        val dbAlbum = albumDao.getAlbumWithTracksDetail(
+            albumName = albumName,
+            artistName = artistName
+        )
         return try {
+            // get data from the network
             val response = albumService.getAlbumDetails(
                 artistName = artistName,
                 albumName = albumName
             )
             if (response.album != null) {
-                Result.success(response.album)
+                val album = response.album.copy(
+                    // use the large sized image
+                    albumImageUrl = response.album.image.find { it.size == "large" }?.text
+                )
+                val tracks = response.album.tracks?.tracks ?: emptyList()
+                val albumWithTracks = AlbumWithTracks(album = album, tracks = tracks)
+                Result.success(albumWithTracks)
             } else if (!response.error.isNullOrEmpty()) {
                 Result.failure(IOException(response.message ?: "Some error occurred"))
             } else {
                 Result.failure(UnknownError("Some error occurred"))
             }
         } catch (e: Exception) {
-            e.printStackTrace()
-            Result.failure(e)
+            // send DB data if network is not available
+            if (dbAlbum == null) {
+                Result.failure(e)
+            } else {
+                Result.success(dbAlbum)
+            }
         }
     }
 

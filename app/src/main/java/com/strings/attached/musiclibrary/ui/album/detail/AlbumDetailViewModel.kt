@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.strings.attached.musiclibrary.data.album.AlbumRepository
-import com.strings.attached.musiclibrary.model.album.AlbumDetail
+import com.strings.attached.musiclibrary.model.album.AlbumWithTracks
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,6 +59,6 @@ class AlbumDetailViewModel @AssistedInject constructor(
 
 sealed class AlbumDetailUiState {
     object Loading : AlbumDetailUiState()
-    data class Success(val album: AlbumDetail) : AlbumDetailUiState()
+    data class Success(val albumWithTracks: AlbumWithTracks) : AlbumDetailUiState()
     data class Error(val throwable: Throwable) : AlbumDetailUiState()
 }
