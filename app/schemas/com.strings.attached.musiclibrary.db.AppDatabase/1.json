@@ -1,0 +1,135 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "9767cd2588a1a6cbaed82954e621b4d2",
+    "entities": [
+      {
+        "tableName": "AlbumDetail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`albumId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `albumName` TEXT NOT NULL, `artistName` TEXT NOT NULL, `url` TEXT NOT NULL, `albumImageUrl` TEXT, `listeners` TEXT NOT NULL, `playCount` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "albumId",
+            "columnName": "albumId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "albumName",
+            "columnName": "albumName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "artistName",
+            "columnName": "artistName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "albumImageUrl",
+            "columnName": "albumImageUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "listeners",
+            "columnName": "listeners",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playCount",
+            "columnName": "playCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "albumId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Track",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`trackId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `trackAlbumId` INTEGER NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `duration` TEXT NOT NULL, FOREIGN KEY(`trackAlbumId`) REFERENCES `AlbumDetail`(`albumId`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "trackId",
+            "columnName": "trackId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trackAlbumId",
+            "columnName": "trackAlbumId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "trackId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Track_trackAlbumId",
+            "unique": false,
+            "columnNames": [
+              "trackAlbumId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Track_trackAlbumId` ON `${TABLE_NAME}` (`trackAlbumId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "AlbumDetail",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "trackAlbumId"
+            ],
+            "referencedColumns": [
+              "albumId"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9767cd2588a1a6cbaed82954e621b4d2')"
+    ]
+  }
+}
