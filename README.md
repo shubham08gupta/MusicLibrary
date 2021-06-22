@@ -32,6 +32,9 @@ An android app to search for artists and their top albums. Also allows an album 
 14. Hamcrest
 15. Turbine
 
+# API key
+Get your api key from (https://www.last.fm/api/account/create) and put it in the [secrets.properties](https://github.com/shubham08gupta/MusicLibrary/blob/main/secrets.properties) file.
+
 # MIT License
 
 Copyright (c) 2021 Shubham
