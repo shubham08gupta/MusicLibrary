@@ -69,6 +69,8 @@ dependencies {
 
     // local test
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'app.cash.turbine:turbine:0.5.2'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
 
     // android test
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -89,6 +91,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines"
 
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
