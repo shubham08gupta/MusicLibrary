@@ -39,8 +39,8 @@ class ArtistSearchViewModel @Inject constructor(
     val searchQueryResult: Flow<PagingData<Artist>> =
         searchQueryStateFlow.flatMapLatest { searchQuery ->
             // no need to check duplicate search query as StateFlow automatically filters duplicate values
-            artistSearchRepository.searchArtistsByName(searchQuery).cachedIn(viewModelScope)
-        }
+            artistSearchRepository.searchArtistsByName(searchQuery)
+        }.cachedIn(viewModelScope)
 
     companion object {
         private const val KEY_SEARCH_QUERY = "query"
